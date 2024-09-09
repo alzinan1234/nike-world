@@ -8,6 +8,7 @@ import { heroapi, popularsales, toprateslaes, highlight } from "./data/data";
 const App = () => {
   return (
     <div>
+      <NavBar></NavBar>
       <main className="flex flex-col gap-16 relative">
         <Hero heroapi={heroapi}></Hero>
         <Sales endpoint={popularsales} ifExists />
