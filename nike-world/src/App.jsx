@@ -1,5 +1,6 @@
 import { Hero } from "./components";
 import FlexContent from "./components/FlexContent";
+import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 
 import Sales from "./components/Sales";
@@ -11,6 +12,7 @@ import {
   highlight,
   sneaker,
   story,
+  footerAPI,
 } from "./data/data";
 
 const App = () => {
@@ -25,6 +27,7 @@ const App = () => {
         <Sales endpoint={toprateslaes} />
         <FlexContent endpoint={sneaker} ifExists />
         <Story story={story} />
+        <Footer footerAPI={footerAPI} />
       </main>
     </div>
   );
