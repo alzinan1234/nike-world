@@ -7,11 +7,12 @@ const FlexContent = ({
   return (
     <>
       <div
-        className={`flex items-center justify-between lg:flex-col lg:justify-center nike-container ${
-          ifExists ? "flex-row-reverse" : "flex-row"
+        className={`flex items-center justify-between lg:justify-center nike-container ${
+          ifExists ? "" : ""
         }`}
       >
-        <div className="max-w-lg lg:max-w-none w-full md:text-center grid items-center lg:justify-items-center">
+        {/* Text Content */}
+        <div className="max-w-lg lg:max-w-none w-full md:text-center grid items-start lg:justify-items-center">
           <h1 className="text-4xl sm:text-3xl font-bold text-gradient">
             {heading}
           </h1>
@@ -21,7 +22,7 @@ const FlexContent = ({
           <p className="xl:text-sm my-4 text-slate-900">{text}</p>
           <a
             href={url}
-            className="flex items-center"
+            className="flex items-center justify-center"
             target={"_blank"}
             role="button"
           >
@@ -33,7 +34,9 @@ const FlexContent = ({
             </button>
           </a>
         </div>
-        <div className="flex items-center justify-center max-w-xl relative lg:max-w-none w-full">
+
+        {/* Image Content */}
+        <div className="flex items-center justify-center max-w-xl relative lg:max-w-none w-full mt-4 lg:mt-0">
           <img
             src={img}
             alt={`img/${heading}`}
