@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaClover } from "react-icons/fa6";
+import { FaStopwatch, FaTimes } from "react-icons/fa";
 
 const Story = ({ story: { news, title } }) => {
   const sliderRef = useRef(null); // Create a reference to the slider
@@ -61,15 +63,24 @@ const Story = ({ story: { news, title } }) => {
               />
               <div className="p-4">
                 <h3 className="text-xl font-bold">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.text}</p>
-                <p className="text-xs text-gray-500">
-                  By {item.by} • {item.time} • {item.like}
-                </p>
+                <p className="text-sm text-black mb-2">{item.text}</p>
+                <div className=" flex justify-between">
+                  <p className="text-xs text-red-900">By {item.by}</p>
+                  <div className="flex gap-2 items-center">
+                    <p>
+                      <FaStopwatch></FaStopwatch>
+                    </p>
+                    <p>{item.time}</p>
+                  </div>
+                  <p>
+                    <span>❤️</span> •{item.like}
+                  </p>
+                </div>
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  className="mt-4 w-full  inline-block bg-black text-center text-white px-4 py-2 rounded hover:bg-blue-600"
                 >
                   {item.btn}
                 </a>
