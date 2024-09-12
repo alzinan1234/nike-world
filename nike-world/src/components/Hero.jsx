@@ -1,4 +1,3 @@
-import Navbar from "./NavBar";
 import Clips from "./utils/clips";
 
 const Hero = ({
