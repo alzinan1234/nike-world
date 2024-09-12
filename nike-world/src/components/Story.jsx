@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaClover } from "react-icons/fa6";
 import { FaStopwatch, FaTimes } from "react-icons/fa";
+import { ClockIcon, HeartIcon } from "@heroicons/react/24/solid";
+import { HashtagIcon } from "@heroicons/react/16/solid";
 
 const Story = ({ story: { news, title } }) => {
   const sliderRef = useRef(null); // Create a reference to the slider
@@ -63,18 +65,26 @@ const Story = ({ story: { news, title } }) => {
               />
               <div className="p-4">
                 <h3 className="text-xl font-bold">{item.title}</h3>
-                <p className="text-sm text-black mb-2">{item.text}</p>
+                <p className="text-xl text-black mb-2">{item.text}</p>
                 <div className=" flex justify-between">
-                  <p className="text-xs text-red-900">By {item.by}</p>
+                  <div className="flex items-center">
+                    <p className="w-5 h-5 text-red-900">
+                      <HashtagIcon></HashtagIcon>
+                    </p>
+                    <p className="text-xs text-red-900">By {item.by}</p>
+                  </div>
                   <div className="flex gap-2 items-center">
-                    <p>
-                      <FaStopwatch></FaStopwatch>
+                    <p className="w-5 h-5 text-black">
+                      <ClockIcon></ClockIcon>
                     </p>
                     <p>{item.time}</p>
                   </div>
-                  <p>
-                    <span>❤️</span> •{item.like}
-                  </p>
+                  <div className="flex items-center">
+                    <p className=" w-5 h-5 text-red-800">
+                      <HeartIcon></HeartIcon>
+                    </p>
+                    <p>•{item.like}</p>
+                  </div>
                 </div>
                 <a
                   href={item.url}
