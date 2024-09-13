@@ -10,12 +10,16 @@ const Story = ({ story: { title, news } }) => {
   const splideOptions = {
     perPage: 4,
     perMove: 1,
-    type: "loop",
-    rewind: true,
+    type: "loop", // Infinite loop
+    rewind: false, // No rewinding, just continuous loop
     keyboard: "global",
     gap: "1rem",
     pagination: false,
     padding: "2rem",
+    autoplay: true, // Enable autoplay
+    interval: 1500, // Faster autoplay (1.5 seconds between slides)
+    pauseOnHover: true, // Pause autoplay when hovered
+    arrows: true, // Remove arrows
     breakpoints: {
       1200: { perPage: 3 },
       991: { perPage: 2.3 },
@@ -24,6 +28,7 @@ const Story = ({ story: { title, news } }) => {
       425: { perPage: 1 },
     },
   };
+
   return (
     <>
       <div className="nike-container mb-11">

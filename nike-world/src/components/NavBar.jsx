@@ -5,6 +5,7 @@ import {
   HeartIcon,
   MagnifyingGlassIcon,
   ShoppingBagIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import logo from "../assets/video/logo.png";
 
@@ -40,11 +41,13 @@ const NavBar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 ${
-        navState ? "bg-white shadow-md" : "bg-transparent"
-      } transition-all duration-300 z-50`}
+      className={
+        !navState
+          ? "absolute top-7 left-0 right-0 opacity-100 z-50"
+          : "fixed top-0 left-0 right-0 h-[9vh] flex items-center justify-center opacity-100 z-[200] blur-effect-theme"
+      }
     >
-      <nav className="flex items-center justify-between px-4 py-2 lg:px-8 lg:py-4 relative">
+      <nav className="flex items-center justify-between nike-container">
         <div className="flex items-center">
           <img
             src={logo}
@@ -56,18 +59,27 @@ const NavBar = () => {
         </div>
 
         {/* Search Input Field */}
-        {searchOpen && (
-          <div className="absolute top-full left-0 right-0 mx-auto mt-2 px-4 lg:px-8 w-full max-w-md bg-gray-800 z-50">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full p-2 border rounded-md shadow-md bg-gray-800 text-white placeholder-white"
-            />
-          </div>
-        )}
+        <div
+          className={`${
+            searchOpen ? "block" : "hidden"
+          } absolute top-0 left-0 right-0 mx-auto mt-2 px-4  lg:px-8 w-full max-w-md flex items-center gap-2 justify-between`}
+        >
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-full p-2 border rounded-md shadow-md bg-gray-800 text-white placeholder-white"
+          />
+          <button
+            onClick={() => setSearchOpen(false)}
+            className="text-white bg-black cursor-pointer rounded p-1"
+          >
+            <XMarkIcon className="w-6 h-6" />
+          </button>
+        </div>
 
-        {/* Hamburger Menu for Mobile */}
-        <div className="lg:hidden flex items-center gap-4">
+        {/* Desktop and Mobile Menu */}
+        <div className="flex items-center gap-4">
+          {/* Search Icon */}
           <button
             type="button"
             className={`flex items-center p-2 rounded-full transition-colors duration-300 ${
@@ -79,16 +91,20 @@ const NavBar = () => {
           >
             <MagnifyingGlassIcon className="w-6 h-6" />
           </button>
+
+          {/* Favorite Icon */}
           <button
             type="button"
             className={`flex items-center p-2 rounded-full transition-colors duration-300 ${
               navState
-                ? "text-slate-900 hover:bg-slate-200"
-                : "text-white hover:bg-slate-600"
+                ? "text-red-950 hover:bg-red-800"
+                : "text-red-950 hover:bg-red-800"
             }`}
           >
             <HeartIcon className="w-6 h-6" />
           </button>
+
+          {/* Cart Icon */}
           <button
             type="button"
             onClick={onCartToggle}
@@ -110,57 +126,6 @@ const NavBar = () => {
             </div>
           </button>
         </div>
-
-        {/* Desktop Menu */}
-        <ul className="hidden lg:flex items-center gap-6">
-          <li>
-            <button
-              type="button"
-              className={`flex items-center p-2 rounded-full transition-colors duration-300 ${
-                navState
-                  ? "text-slate-900 hover:bg-slate-200"
-                  : "text-white hover:bg-slate-600"
-              }`}
-              onClick={() => setSearchOpen(!searchOpen)}
-            >
-              <MagnifyingGlassIcon className="w-6 h-6" />
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className={`flex items-center p-2 rounded-full transition-colors duration-300 ${
-                navState
-                  ? "text-slate-900 hover:bg-slate-200"
-                  : "text-white hover:bg-slate-600"
-              }`}
-            >
-              <HeartIcon className="w-6 h-6" />
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={onCartToggle}
-              className="relative flex items-center p-2 rounded-full transition-transform duration-300 active:scale-110"
-            >
-              <ShoppingBagIcon
-                className={`w-6 h-6 ${
-                  navState ? "text-slate-900" : "text-white"
-                }`}
-              />
-              <div
-                className={`absolute top-[-8px] right-[-8px] flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full ${
-                  navState
-                    ? "bg-slate-900 text-white shadow-slate-900"
-                    : "bg-white text-slate-900 shadow-slate-100"
-                }`}
-              >
-                {totalQTY}
-              </div>
-            </button>
-          </li>
-        </ul>
       </nav>
     </header>
   );
