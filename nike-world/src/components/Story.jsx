@@ -1,105 +1,86 @@
-import React, { useRef } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { FaClover } from "react-icons/fa6";
-import { FaStopwatch, FaTimes } from "react-icons/fa";
-import { ClockIcon, HeartIcon } from "@heroicons/react/24/solid";
-import { HashtagIcon } from "@heroicons/react/16/solid";
+import React from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/css";
+import { HashtagIcon, HeartIcon } from "@heroicons/react/24/solid";
+import { ClockIcon } from "@heroicons/react/24/outline";
+import Title from "./utils/Title";
+import { truncate } from "lodash";
 
-const Story = ({ story: { news, title } }) => {
-  const sliderRef = useRef(null); // Create a reference to the slider
-
-  const sliderSettings = {
-    infinite: true,
-    speed: 2000,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 0,
-    cssEase: "linear",
-    arrows: false,
-    dots: false,
-    pauseOnHover: false, // Disable default pause on hover
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+const Story = ({ story: { title, news } }) => {
+  const splideOptions = {
+    perPage: 4,
+    perMove: 1,
+    type: "loop",
+    rewind: true,
+    keyboard: "global",
+    gap: "1rem",
+    pagination: false,
+    padding: "2rem",
+    breakpoints: {
+      1200: { perPage: 3 },
+      991: { perPage: 2.3 },
+      768: { perPage: 2 },
+      500: { perPage: 1.3 },
+      425: { perPage: 1 },
+    },
   };
-
-  // Custom hover handlers to pause and resume the slider
-  const handleMouseEnter = () => {
-    sliderRef.current.slickPause(); // Pause the slider on hover
-  };
-
-  const handleMouseLeave = () => {
-    sliderRef.current.slickPlay(); // Resume the slider when hover ends
-  };
-
   return (
-    <div className="nike-container my-8">
-      <h2 className="text-3xl font-bold mb-6">{title}</h2>
-      <Slider {...sliderSettings} ref={sliderRef}>
-        {news.map((item, index) => (
-          <div
-            key={index}
-            className="p-4"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="border rounded-lg shadow-lg overflow-hidden transition-transform duration-500 hover:scale-105">
-              <img
-                src={item.img}
-                alt={item.title}
-                className="w-full h-60 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-bold">{item.title}</h3>
-                <p className="text-xl text-black mb-2">{item.text}</p>
-                <div className=" flex justify-between">
-                  <div className="flex items-center">
-                    <p className="w-5 h-5 text-red-900">
-                      <HashtagIcon></HashtagIcon>
-                    </p>
-                    <p className="text-xs text-red-900">By {item.by}</p>
+    <>
+      <div className="nike-container mb-11">
+        <Title title={title} />
+        <div className="mt-7">
+          <Splide options={splideOptions}>
+            {news.map((val, i) => (
+              <SplideSlide key={i} className="mb-0.5">
+                <div className="relative grid items-center gap-4 pb-2 rounded-lg shadow shadow-slate-200 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={val.img}
+                      alt={`img/story/${i}`}
+                      className="w-full h-auto object-cover shadow-md shadow-slate-200 rounded-tl-lg rounded-tr-lg"
+                    />
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <p className="w-5 h-5 text-black">
-                      <ClockIcon></ClockIcon>
-                    </p>
-                    <p>{item.time}</p>
+                  <div className="flex items-center justify-between w-full px-4">
+                    <div className="flex items-center gap-0.5">
+                      <HeartIcon className="icon-style text-red-500 w-5 h-5" />
+                      <span className="text-xs font-bold">{val.like}</span>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      <ClockIcon className="icon-style w-4 h-4 text-black" />
+                      <span className="text-xs font-bold">{val.time}</span>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      <HashtagIcon className="icon-style text-blue-600" />
+                      <span className="text-xs font-bold text-blue-600">
+                        {val.by}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <p className=" w-5 h-5 text-red-800">
-                      <HeartIcon></HeartIcon>
+                  <div className="grid items-center justify-items-start px-4">
+                    <h1 className="text-base font-semibold lg:text-sm">
+                      {val.title}
+                    </h1>
+                    <p className="text-sm text-justify lg:text-xs">
+                      {truncate(val.text, { length: 175 })}
                     </p>
-                    <p>•{item.like}</p>
+                  </div>
+                  <div className="flex items-center justify-center px-4 w-full">
+                    <a
+                      href={val.url}
+                      target="_blank"
+                      role={"button"}
+                      className="w-full bg-gradient-to-b from-slate-900 to-black shadow-md shadow-black text-center text-slate-100 py-1.5 button-theme"
+                    >
+                      {val.btn}
+                    </a>
                   </div>
                 </div>
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 w-full  inline-block bg-black text-center text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  {item.btn}
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
-      </Slider>
-    </div>
+              </SplideSlide>
+            ))}
+          </Splide>
+        </div>
+      </div>
+    </>
   );
 };
 
